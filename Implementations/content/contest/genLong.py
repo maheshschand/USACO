@@ -55,7 +55,7 @@ with open('TemplateLong.cpp', 'w') as outfile:
 	for line in extra:
 		ad(line)
 	# print("OH",res[-1],"HA",res[-1][-1],res[-1][-2])
-	ind = res[-1].find("ios")
+	ind = res[-1].find("cin.tie(0)->")
 	res[-1] = res[-1][:ind-1]+"\n\tsetIO();\n\t\n"
 
 	res.append('	// you should actually read the stuff at the bottom\n')
@@ -65,6 +65,7 @@ with open('TemplateLong.cpp', 'w') as outfile:
 	* special cases (n=1?)
 	* do smth instead of nothing and stay organized
 	* WRITE STUFF DOWN
+	* DON'T GET STUCK ON ONE APPROACH
 */""")
 	for line in res:
 		outfile.write(line)

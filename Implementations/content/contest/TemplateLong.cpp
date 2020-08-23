@@ -11,12 +11,15 @@ typedef pair<ll,ll> pl;
 typedef pair<db,db> pd; 
 
 typedef vector<int> vi; 
+typedef vector<bool> vb; 
 typedef vector<ll> vl; 
 typedef vector<db> vd; 
 typedef vector<str> vs; 
 typedef vector<pi> vpi;
 typedef vector<pl> vpl; 
 typedef vector<pd> vpd; 
+template<class T> using V = vector<T>; 
+template<class T, size_t SZ> using AR = array<T,SZ>; 
 
 #define mp make_pair
 #define f first
@@ -24,6 +27,7 @@ typedef vector<pd> vpd;
 #define sz(x) (int)(x).size()
 #define all(x) begin(x), end(x)
 #define rall(x) (x).rbegin(), (x).rend() 
+#define sor(x) sort(all(x)) 
 #define rsz resize
 #define ins insert 
 #define ft front() 
@@ -57,7 +61,8 @@ ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
 ll half(ll x) { return fdiv(x,2); }
 
-template<class T, class U> T fstTrue(T lo, T hi, U f) {
+template<class T, class U> T fstTrue(T lo, T hi, U f) { 
+	// note: if (lo+hi)/2 is used instead of half(lo+hi) then this will loop infinitely when lo=hi
 	hi ++; assert(lo <= hi); // assuming f is increasing
 	while (lo < hi) { // find first index such that f is true 
 		T mid = half(lo+hi);
@@ -152,16 +157,19 @@ void DBG() { cerr << "]" << endl; }
 template<class H, class... T> void DBG(H h, T... t) {
 	cerr << ts(h); if (sizeof...(t)) cerr << ", ";
 	DBG(t...); }
-#ifdef LOCAL // compile with -DLOCAL
-	#define dbg(...) cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: [", DBG(__VA_ARGS__)
+#ifdef LOCAL // compile with -DLOCAL, chk -> fake assert
+	#define dbg(...) cerr << "Line(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: [", DBG(__VA_ARGS__)
+	#define chk(...) if (!(__VA_ARGS__)) cerr << "Line(" << __LINE__ << ") -> function(" \
+		 << __FUNCTION__  << ") -> CHK FAILED: (" << #__VA_ARGS__ << ")" << "\n", exit(0);
 #else
 	#define dbg(...) 0
+	#define chk(...) 0
 #endif
 
 // FILE I/O
 void setIn(str s) { freopen(s.c_str(),"r",stdin); }
 void setOut(str s) { freopen(s.c_str(),"w",stdout); }
-void unsyncIO() { ios_base::sync_with_stdio(0); cin.tie(0); }
+void unsyncIO() { cin.tie(0)->sync_with_stdio(0); }
 void setIO(str s = "") {
 	unsyncIO();
 	// cin.exceptions(cin.failbit); 
@@ -181,4 +189,5 @@ int main() {
 	* special cases (n=1?)
 	* do smth instead of nothing and stay organized
 	* WRITE STUFF DOWN
+	* DON'T GET STUCK ON ONE APPROACH
 */

@@ -7,7 +7,7 @@ for sublime text 3
 [ifdef](https://codeforces.com/blog/entry/50312?#comment-342457)
 
 ```
-// INITIALIZE ARRAYS TO ZERO
+// make sure to INITIALIZE ARRAYS TO ZERO
 
 struct ${1:Name} {
 	void gen(int seed) {
@@ -32,17 +32,18 @@ int main() {
 ## FHC
 
 ```
-// REINITIALIZE ARRAYS BETWEEN TCs
+// make sure to intialize ALL GLOBAL VARS between tcs!
 
 int N;
-
 void inp(vi& v) { // common way to reduce amount of input
 	v.rsz(1); ll A,B,C; re(v,A,B,C);
 	while (sz(v) < N) v.pb((A*v.back()+B)%C+1);
 }
 
+clock_t beg = clock();
+
 void solve(int tc) {
-	cerr << "Doing #" << tc << "\n";
+	cerr << "Doing TC #" << tc << " " << (db)(clock()-beg)/CLOCKS_PER_SEC << "\n";
 	${0}
 }
 
@@ -59,10 +60,12 @@ int main() {
 ## GCJ
 
 ```
-// REINITIALIZE ARRAYS BETWEEN TCs
+// make sure to intialize ALL GLOBAL VARS between tcs!
+
+clock_t beg = clock();
 
 void solve(int tc) {
-	// cerr << "Doing #" << tc << "\n";
+	// cerr << "Doing TC #" << tc << " " << (db)(clock()-beg)/CLOCKS_PER_SEC << "\n";
 	${0}
 }
 
