@@ -24,7 +24,9 @@ struct ${1:Name} {
 
 #ifdef LOCAL
 int main() {
+	clock_t beg = clock();
 	${1:Name} c; ps(c.${2:method}());
+	dbg((db)(clock()-beg)/CLOCKS_PER_SEC);
 }
 #endif
 ```
@@ -103,4 +105,28 @@ F0R(i,N-1) {
 	int a,b; re(a,b);
 	adj[a].pb(b), adj[b].pb(a);
 }
+```
+
+## TS
+
+```
+// make sure to intialize ALL GLOBAL VARS between tcs!
+
+void solve(int tc) {
+	${0}
+}
+
+int main() {
+	setIO();
+	int TC; re(TC);
+	FOR(i,1,TC+1) solve(i);
+}
+```
+
+## lam
+
+```
+auto ${1:name} = [&](${2}) {
+	${3}
+};
 ```

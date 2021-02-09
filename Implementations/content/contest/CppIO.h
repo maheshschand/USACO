@@ -15,18 +15,19 @@
 #define tcTUU tcT, class ...U
 tcT> void re(complex<T>& c);
 tcTU> void re(pair<T,U>& p);
-tcT> void re(vector<T>& v);
+tcT> void re(V<T>& v);
 tcT, size_t SZ> void re(AR<T,SZ>& a);
 
 tcT> void re(T& x) { cin >> x; }
-void re(db& d) { str t; re(t); d = stod(t); }
-void re(ld& d) { str t; re(t); d = stold(t); }
+void re(double& d) { str t; re(t); d = stod(t); }
+void re(long double& d) { str t; re(t); d = stold(t); }
 tcTUU> void re(T& t, U&... u) { re(t); re(u...); }
 
 tcT> void re(complex<T>& c) { T a,b; re(a,b); c = {a,b}; }
 tcTU> void re(pair<T,U>& p) { re(p.f,p.s); }
-tcT> void re(vector<T>& x) { trav(a,x) re(a); }
-tcT, size_t SZ> void re(AR<T,SZ>& x) { trav(a,x) re(a); }
+tcT> void re(V<T>& x) { each(a,x) re(a); }
+tcT, size_t SZ> void re(AR<T,SZ>& x) { each(a,x) re(a); }
+tcT> void rv(int n, V<T>& x) { x.rsz(n); re(x); }
 
 // TO_STRING
 #define ts to_string
@@ -34,15 +35,15 @@ str ts(char c) { return str(1,c); }
 str ts(const char* s) { return (str)s; }
 str ts(str s) { return s; }
 str ts(bool b) { 
-	#ifdef LOCAL
-		return b ? "true" : "false"; 
-	#else 
-		return ts((int)b);
-	#endif
+	// #ifdef LOCAL
+	// 	return b ? "true" : "false"; 
+	// #else 
+	return ts((int)b);
+	// #endif
 }
 tcT> str ts(complex<T> c) { 
 	stringstream ss; ss << c; return ss.str(); }
-str ts(vector<bool> v) {
+str ts(V<bool> v) {
 	str res = "{"; F0R(i,sz(v)) res += char('0'+v[i]);
 	res += "}"; return res; }
 template<size_t SZ> str ts(bitset<SZ> b) {
@@ -64,7 +65,6 @@ tcT> str ts(T v) { // containers with begin(), end()
 			fst = 0; res += ts(x);
 		}
 		return res;
-
 	#endif
 }
 tcTU> str ts(pair<T,U> p) {
@@ -97,14 +97,17 @@ tcTUU> void DBG(const T& t, const U&... u) {
 	#define chk(...) 0
 #endif
 
+void setPrec() { cout << fixed << setprecision(15); }
+void unsyncIO() { cin.tie(0)->sync_with_stdio(0); }
 // FILE I/O
 void setIn(str s) { freopen(s.c_str(),"r",stdin); }
 void setOut(str s) { freopen(s.c_str(),"w",stdout); }
-void unsyncIO() { cin.tie(0)->sync_with_stdio(0); }
 void setIO(str s = "") {
-	unsyncIO();
+	unsyncIO(); setPrec();
 	// cin.exceptions(cin.failbit); 
 	// throws exception when do smth illegal
 	// ex. try to read letter into int
-	if (sz(s)) { setIn(s+".in"), setOut(s+".out"); } // for USACO
+	if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for USACO
 }
+
+#define ints(...) int __VA_ARGS__; re(__VA_ARGS__);

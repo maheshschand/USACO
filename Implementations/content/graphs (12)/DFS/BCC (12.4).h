@@ -13,15 +13,15 @@
  */
 
 struct BCC {
-	vector<vpi> adj; vpi ed; 
-	vector<vi> comps; // edges for each bcc
+	V<vpi> adj; vpi ed; 
+	V<vi> comps, vertSets; // edges for each bcc
 	int N, ti = 0; vi disc, st; 
 	void init(int _N) { N = _N; disc.rsz(N), adj.rsz(N); }
 	void ae(int x, int y) { 
 		adj[x].eb(y,sz(ed)), adj[y].eb(x,sz(ed)), ed.eb(x,y); }
 	int dfs(int x, int p = -1) { // return lowest disc
 		int low = disc[x] = ++ti;
-		trav(e,adj[x]) if (e.s != p) {
+		each(e,adj[x]) if (e.s != p) {
 			if (!disc[e.f]) {
 				st.pb(e.s); // disc[x] < LOW -> bridge
 				int LOW = dfs(e.f,e.s); ckmin(low,LOW); 
@@ -35,5 +35,14 @@ struct BCC {
 		}
 		return low;
 	}
-	void gen() { F0R(i,N) if (!disc[i]) dfs(i);  }
+	void gen() { 
+		F0R(i,N) if (!disc[i]) dfs(i);  
+		vb in(N);
+		each(c,comps) { // vertices contained within each BCC
+			vertSets.eb(); // so you can easily create block cut tree
+			auto ad = [&](int x) { if (!in[x]) in[x] = 1, vertSets.bk.pb(x); };
+			each(e,c) ad(ed[e].f), ad(ed[e].s);
+			each(e,c) in[ed[e].f] = in[ed[e].s] = 0;
+		}
+	}
 };
